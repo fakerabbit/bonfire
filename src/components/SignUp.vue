@@ -5,7 +5,7 @@
         <input type="password" placeholder="Password"><br>
         <input type="confirmPassword" placeholder="Confirm Password"><br>
         <button>Sign Up</button>
-        <span>or go back to login.</span>
+        <span>or <router-link to="/login">go back to login</router-link>.</span>
     </div>
 </template>
 
