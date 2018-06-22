@@ -1,21 +1,41 @@
 <template>
     <div class="sign-up">
         <p>Let's create a new account !</p>
-        <input type="text" placeholder="Email"><br>
-        <input type="password" placeholder="Password"><br>
-        <input type="confirmPassword" placeholder="Confirm Password"><br>
-        <button>Sign Up</button>
+        <input type="text" v-model="email" placeholder="Email"><br>
+        <input type="password" v-model="password" placeholder="Password"><br>
+        <input type="password" v-model="confirmPassword" placeholder="Confirm Password"><br>
+        <button v-on:click="signUp">Sign Up</button>
         <span>or <router-link to="/login">go back to login</router-link>.</span>
     </div>
 </template>
 
 <script>
+import firebase from 'firebase'
 export default {
     name: 'signUp',
     data: function() {
-        return {}
+        return {
+            email: '',
+            password: '',
+            confirmPassword: ''
+        }
     },
-    methods: {}
+    methods: {
+        signUp: function() {
+            if (this.password === this.confirmPassword && this.password.length > 5) {
+                firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
+                    function(user) {
+                        alert('Your account has been created!')
+                    },
+                    function(err) {
+                        alert('Oops. ' + err.message)
+                    }
+                );
+            } else {
+                alert("Oops. Passwords don't match. Please enter a valid password.")
+            }
+        }
+    }
 }
 </script>
 
