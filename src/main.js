@@ -7,6 +7,7 @@ import firebase from 'firebase'
 
 Vue.config.productionTip = false
 
+let app;
 // Initialize Firebase
 var config = {
   apiKey: "API_KEY",
@@ -17,11 +18,14 @@ var config = {
   messagingSenderId: "SENDER_ID"
 };
 firebase.initializeApp(config);
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: { App }
-})
+firebase.auth().onAuthStateChanged(function(user) {
+  /* eslint-disable no-new */
+  if (!app) {
+    app = new Vue({
+      el: '#app',
+      router,
+      template: '<App/>',
+      components: { App }
+    })
+  }
+});
